@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "swept_away",
+	"version": "${version}",
+	"name": "Swept Away",
+	"description": "Removes the sweeping effect from swords without the sweeping edge enchantment",
+	"authors": [
+		"Jolkert"
+	],
+	"contact": {
+		"website": "https://jolkert.dev/",
+		"repo": "https://github.com/Jolkert/swept_away"
+	},
+	"license": "GPL-3.0",
+	"icon": "assets/swept_away/icon.png",
+	"environment": "server",
+	"entrypoints": {
+		"main": [
+			"dev.jolkert.sweptaway.SweptAway"
+		]
+	},
+	"mixins": [
+		"swept_away.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"fabric": "*",
+		"minecraft": "${minecraft_version}"
+	}
+}
