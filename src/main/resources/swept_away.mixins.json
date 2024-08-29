@@ -4,6 +4,7 @@
   "package": "dev.jolkert.sweptaway.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "SweepRemovalMixin"
   ],
   "client": [
   ],
