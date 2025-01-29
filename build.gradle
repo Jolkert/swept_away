@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.9-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -65,6 +65,10 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}"}
     }
+}
+
+remapJar {
+    archiveFileName = "${project.archivesBaseName}_${project.mod_version}-${project.minecraft_version}.jar"
 }
 
 // configure the maven publication

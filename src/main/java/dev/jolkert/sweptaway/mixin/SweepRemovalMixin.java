@@ -15,6 +15,6 @@ public class SweepRemovalMixin
 	)
 	private boolean sweptAway$removeSweep(boolean originalValue)
 	{
-		return originalValue && ((PlayerEntity)(Object)this).getAttributeValue(EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO) != 0;
+		return originalValue && ((PlayerEntity)(Object)this).getAttributeValue(EntityAttributes.SWEEPING_DAMAGE_RATIO) != 0;
 	}
 }
