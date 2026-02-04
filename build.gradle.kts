@@ -63,6 +63,7 @@ cloche {
 		metadata {
 			entrypoint("main", "dev.jolkert.sweptaway.fabric.SweptAwayFabric");
 			mixins.from("src/common/swept_away.mixins.json")
+			dependency("minecraft", "1.21.1")
 		}
 
 		data()
@@ -70,10 +71,6 @@ cloche {
 			tasks.named<Jar>(sourceSet.jarTaskName) {
 				duplicatesStrategy = DuplicatesStrategy.INCLUDE
 			}
-		}
-
-		dependencies {
-			fabricApi("0.115.2")
 		}
 
 		runs {
