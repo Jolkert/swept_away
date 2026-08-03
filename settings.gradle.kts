@@ -2,8 +2,7 @@ rootProject.name = "sweptaway"
 
 pluginManagement {
 	repositories {
-		maven(url = "https://maven.msrandom.net/repository/cloche")
-
+		maven("https://maven.msrandom.net/repository/cloche")
 		gradlePluginPortal()
 	}
 }

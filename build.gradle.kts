@@ -1,88 +1,132 @@
 import net.msrandom.minecraftcodev.runs.MinecraftRunConfiguration
-import org.gradle.api.file.DuplicatesStrategy
 
-plugins {
-	id("earth.terrarium.cloche") version "0.17.7"
-	kotlin("jvm") version "2.2.20"
+// ig cloche is busted (https://github.com/terrarium-earth/cloche/issues/157) -morgan 2026-07-29
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
 }
 
+plugins {
+	id("earth.terrarium.cloche") version "0.19.13"
+}
+
+group = "dev.jolkert"
+version = "2.1.0"
+
 repositories {
+	cloche.main()
 	cloche.librariesMinecraft()
-
 	mavenCentral()
-
 	cloche {
-		main()
-
 		mavenFabric()
 		mavenNeoforgedMeta()
 		mavenNeoforged()
+		mavenParchment()
 	}
+
+	maven("https://maven.terraformersmc.com/") { name = "Terraformers" } // Mod Menu
 }
 
 cloche {
-	minecraftVersion = "1.21.1"
-
 	metadata {
 		modId = "swept_away"
 		name = "Swept Away"
-		license = "GPL-3.0"
-		description = "Remove sweeping from unenchanted swords!"
+		description = "Removes sweeping from unenchanted swords."
 		icon = "assets/swept_away/icon.png"
-
 		author("jolkert")
+		license = "GPL-3.0"
 	}
 
-	mappings {
-		official()
-		parchment("2024.11.17")
-	}
+	common {}
 
-	neoforge {
-		loaderVersion = "21.1.135"
+	val latestVersion = "26.2" // Fabric Only
+	val ltsVersion = "1.21.1" // Fabric & Neoforge
+
+	val commonLts = common("common:$ltsVersion") {
 		metadata {
-			mixins.from("src/common/swept_away.mixins.json")
-		}
-
-		data()
-
-		runs {
-			server {
-				args("nogui")
-			}
-			client {
-				setUsernameAndUuid()
-			}
-			data()
+			mixins.from("src/common/$ltsVersion/main/swept_away.common-$ltsVersion.mixins.json")
 		}
 	}
 
-	fabric {
-		loaderVersion = "0.16.10"
+	// ------------------------------------------
+	// | FABRIC (https://fabricmc.net/develop/) |
+	// ------------------------------------------
+	fabric("fabric:$latestVersion") {
+		minecraftVersion = latestVersion
+		loaderVersion = "0.19.3"
+		includedClient()
 
 		metadata {
-			entrypoint("main", "dev.jolkert.sweptaway.fabric.SweptAwayFabric");
-			mixins.from("src/common/swept_away.mixins.json")
-			dependency("minecraft", "1.21.1")
+			entrypoint("main", "dev.jolkert.sweptaway.fabric.SweptAwayFabric")
+			mixins.from("src/fabric/$latestVersion/main/swept_away.fabric-$latestVersion.mixins.json")
 		}
 
-		data()
-		client {
-			tasks.named<Jar>(sourceSet.jarTaskName) {
-				duplicatesStrategy = DuplicatesStrategy.INCLUDE
-			}
+		val modMenuVersion = "20.0.1"
+		dependencies {
+			fabricApi("0.156.0")
+			runtimeOnly("com.terraformersmc:modmenu:$modMenuVersion")
 		}
 
 		runs {
 			server()
-			client {
+			client() {
 				setUsernameAndUuid()
 			}
-			data()
+		}
+	}
+
+	fabric("fabric:$ltsVersion") {
+		dependsOn(commonLts)
+
+		minecraftVersion = ltsVersion
+		loaderVersion = "0.19.3"
+		includedClient()
+		mappings {
+			official()
+			parchment("2024.11.17") // https://parchmentmc.org/docs/getting-started.html
+		}
+
+		metadata {
+			entrypoint("main", "dev.jolkert.sweptaway.fabric.SweptAwayFabric")
+		}
+
+		val modMenuVersion = "11.0.4"
+		dependencies {
+			fabricApi("0.116.15")
+			modImplementation("com.terraformersmc:modmenu:$modMenuVersion")
+		}
+
+		runs {
+			server()
+			client() {
+				setUsernameAndUuid()
+			}
+		}
+
+	}
+
+	// -------------------------------------
+	// | NEOFORGE (https://neoforged.net/) |
+	// -------------------------------------
+	neoforge {
+		dependsOn(commonLts)
+
+		minecraftVersion = ltsVersion
+		loaderVersion = "21.1.244"
+		mappings {
+			official()
+			parchment("2024.11.17") // https://parchmentmc.org/docs/getting-started.html
+		}
+
+		runs {
+			server()
+			client() {
+				setUsernameAndUuid()
+			}
 		}
 	}
 }
-
 
 fun MinecraftRunConfiguration.setUsernameAndUuid()
 {

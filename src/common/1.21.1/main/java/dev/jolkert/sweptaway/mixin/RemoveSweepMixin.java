@@ -16,12 +16,14 @@ public class RemoveSweepMixin
 	// frail implementation. if they ever add a call to `Player::getItemInHand` in this function we're probaly gonna have
 	// to change the specifics of this operation. so yknow just keep that in mind when we bump mc version
 	// -morgan 2026-02-03
+	// turns out they actually made it a lot nicer in latest version lol
+	// -morgan 2026-08-03
 	@WrapOperation(
-			method = "attack",
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
-			)
+		method = "attack",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
+		)
 	)
 	ItemStack removeSweep(Player instance, InteractionHand hand, Operation<ItemStack> original)
 	{
