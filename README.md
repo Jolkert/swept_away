@@ -19,7 +19,7 @@ older than Latest Release which will be receiving new versions of the mod.
 
 ## Bug Reports
 
-If you find any bugs, please report them to the [codeberg repo](https://codeberg.org/jolkert//issues)
+If you find any bugs, please report them to the [codeberg repo](https://codeberg.org/jolkert/swept-away/issues)
 
 ## Modpacks
 
