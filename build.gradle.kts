@@ -40,7 +40,7 @@ cloche {
 
 	common {}
 
-	val latestVersion = "26.2" // Fabric Only
+	val latestVersion = "26.3" // Fabric Only
 	val ltsVersion = "1.21.1" // Fabric & Neoforge
 
 	val commonLts = common("common:$ltsVersion") {
@@ -62,9 +62,9 @@ cloche {
 			mixins.from("src/fabric/$latestVersion/main/swept_away.fabric-$latestVersion.mixins.json")
 		}
 
-		val modMenuVersion = "20.0.1"
+		val modMenuVersion = "21.0.0-beta.1"
 		dependencies {
-			fabricApi("0.156.0")
+			fabricApi("0.161.0")
 			runtimeOnly("com.terraformersmc:modmenu:$modMenuVersion")
 		}
 

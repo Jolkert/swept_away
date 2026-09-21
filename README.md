@@ -12,7 +12,7 @@ In multiplayer, the mod **only needs to be installed on the server to function**
 
 As with most of my mods, the plan is to keep Swept Away on 1.21.1 Neoforge & Fabric
 for as long as 1.21.1 is a prominent version for modpacks, and continue pushing
-updates for the version of Minecraft on Fabric.
+updates for the latest version of Minecraft on Fabric.
 
 As the "long-term-support" version, 1.21.1 is the only Minecraft version
 older than Latest Release which will be receiving new versions of the mod.
